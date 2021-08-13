@@ -1,6 +1,7 @@
 import 'package:finhelper/modules/home/home_page.dart';
 import 'package:finhelper/modules/login/login_page.dart';
 import 'package:finhelper/modules/splash/splash_page.dart';
+import 'package:finhelper/shared/models/user_model.dart';
 import 'package:finhelper/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,9 @@ class AppWidget extends StatelessWidget {
       routes: {
         "/splash": (context) => SplashPage(),
         "/login": (context) => LoginPage(),
-        "/home": (context) => HomePage(),
+        "/home": (context) => HomePage(
+              user: ModalRoute.of(context)!.settings.arguments as UserModel,
+            ),
       },
     );
   }
