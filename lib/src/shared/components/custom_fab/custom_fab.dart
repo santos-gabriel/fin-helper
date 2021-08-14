@@ -1,5 +1,5 @@
-import 'package:finhelper/shared/components/custom_fab/custom_fab_controller.dart';
-import 'package:finhelper/shared/themes/app_colors.dart';
+import 'package:finhelper/src/shared/components/custom_fab/custom_fab_controller.dart';
+import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomFab extends StatefulWidget {

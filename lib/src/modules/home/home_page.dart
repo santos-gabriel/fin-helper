@@ -1,15 +1,16 @@
-import 'package:finhelper/modules/expanses/expanses_page.dart';
-import 'package:finhelper/modules/extract/extract_page.dart';
-import 'package:finhelper/modules/revenues/revenues_page.dart';
-import 'package:finhelper/modules/settings/settings_page.dart';
-import 'package:finhelper/shared/themes/app_text_styles.dart';
+import 'package:finhelper/src/modules/expanses/expanses_page.dart';
+import 'package:finhelper/src/modules/extract/extract_page.dart';
+import 'package:finhelper/src/modules/revenues/revenues_page.dart';
+import 'package:finhelper/src/modules/settings/settings_page.dart';
+import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'package:finhelper/modules/home/home_controller.dart';
-import 'package:finhelper/shared/components/custom_bnb/custom_bnb.dart';
-import 'package:finhelper/shared/components/custom_fab/custom_fab.dart';
-import 'package:finhelper/shared/models/user_model.dart';
-import 'package:finhelper/shared/themes/app_colors.dart';
+import 'package:finhelper/src/modules/home/home_controller.dart';
+import 'package:finhelper/src/shared/components/custom_bnb/custom_bnb.dart';
+import 'package:finhelper/src/shared/components/custom_fab/custom_fab.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
+import 'package:finhelper/src/shared/themes/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   final UserModel user;
@@ -23,10 +24,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  final controller = HomeController();
-
+  bool seeBalance = true;
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<HomeController>();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(200),
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   Duration(seconds: 2),
                   () => {
                         setState(() {
-                          controller.setCurrentPage(0);
+                          controller.setCurrentPage(BodyHomePages.Extract);
                         })
                       });
             },
@@ -93,16 +94,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(
-                                  Icons.remove_red_eye,
-                                  color: AppColors.whiteSoft,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      seeBalance = !seeBalance;
+                                    });
+                                  },
+                                  child: seeBalance
+                                      ? Icon(
+                                          Icons.remove_red_eye,
+                                          color: AppColors.whiteSoft,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                          color: AppColors.whiteSoft,
+                                        ),
                                 ),
                               ),
                             ),
-                            TextSpan(
-                              text: "\nR\$ ${100.00} ",
-                              style: AppTextStyles.subTitleWhiteSoft,
-                            ),
+                            seeBalance
+                                ? TextSpan(
+                                    text: "\nR\$ ${100.00} ",
+                                    style: AppTextStyles.subTitleWhiteSoft,
+                                  )
+                                : TextSpan(
+                                    text: "\nR\$ ______ ",
+                                    style: AppTextStyles.subTitleWhiteSoft,
+                                  ),
                           ],
                         )),
                       ),
@@ -121,7 +139,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
       ),
       body: [
-        SettingsPage(
+        ExtractPage(
           key: UniqueKey(),
         ),
         RevenuesPage(
@@ -130,86 +148,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ExpansesPage(
           key: UniqueKey(),
         ),
-        ExtractPage(
+        SettingsPage(
           key: UniqueKey(),
         ),
-      ][controller.currentPage],
+      ][controller.currentPage.index],
       // bottomNavigationBar: CustomBnb(),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 10.0,
-        color: AppColors.blueSoft,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    controller.setCurrentPage(0);
-                  });
-                },
-                icon: Icon(
-                  Icons.settings,
-                  color: controller.currentPage == 0
-                      ? AppColors.orangeMedium
-                      : AppColors.whiteSoft,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    controller.setCurrentPage(1);
-                  });
-                },
-                icon: Icon(
-                  Icons.trending_up,
-                  color: controller.currentPage == 1
-                      ? AppColors.orangeMedium
-                      : AppColors.whiteSoft,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    controller.setCurrentPage(2);
-                  });
-                },
-                icon: Icon(
-                  Icons.trending_down,
-                  color: controller.currentPage == 2
-                      ? AppColors.orangeMedium
-                      : AppColors.whiteSoft,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    controller.setCurrentPage(3);
-                  });
-                },
-                icon: Icon(
-                  Icons.toc,
-                  color: controller.currentPage == 3
-                      ? AppColors.orangeMedium
-                      : AppColors.whiteSoft,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBnb(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: CustomFab(),
     );

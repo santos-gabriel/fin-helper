@@ -1,4 +1,4 @@
-import 'package:finhelper/shared/models/user_model.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

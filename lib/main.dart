@@ -1,5 +1,4 @@
-import 'package:finhelper/app_widget.dart';
-import 'package:finhelper/modules/splash/splash_page.dart';
+import 'package:finhelper/src/app_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {

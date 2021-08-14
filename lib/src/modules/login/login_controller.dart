@@ -1,5 +1,5 @@
-import 'package:finhelper/shared/auth/auth_controller.dart';
-import 'package:finhelper/shared/models/user_model.dart';
+import 'package:finhelper/src/shared/auth/auth_controller.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

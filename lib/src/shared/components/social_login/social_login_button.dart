@@ -1,6 +1,6 @@
-import 'package:finhelper/shared/themes/app_colors.dart';
-import 'package:finhelper/shared/themes/app_images.dart';
-import 'package:finhelper/shared/themes/app_text_styles.dart';
+import 'package:finhelper/src/shared/themes/app_colors.dart';
+import 'package:finhelper/src/shared/themes/app_images.dart';
+import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class SocialLoginButton extends StatelessWidget {
