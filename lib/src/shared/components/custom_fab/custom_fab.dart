@@ -3,7 +3,17 @@ import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomFab extends StatefulWidget {
-  const CustomFab({Key? key}) : super(key: key);
+  final Icon iconButtonPrimary;
+  final VoidCallback onPressedIconButtonPrimary;
+  final Icon iconButtonSecondary;
+  final VoidCallback onPressedIconButtonSecondary;
+  const CustomFab({
+    Key? key,
+    required this.iconButtonPrimary,
+    required this.onPressedIconButtonPrimary,
+    required this.iconButtonSecondary,
+    required this.onPressedIconButtonSecondary,
+  }) : super(key: key);
 
   @override
   _CustomFabState createState() => _CustomFabState();
@@ -24,7 +34,9 @@ class _CustomFabState extends State<CustomFab>
       vsync: this,
       duration: Duration(milliseconds: 500),
     )..addListener(() {
-        setState(() {});
+        setState(() {
+          print("object");
+        });
       });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
@@ -72,30 +84,20 @@ class _CustomFabState extends State<CustomFab>
   }
 
   Widget add() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Receitas',
-        child: Icon(
-          Icons.trending_up,
-          color: AppColors.whiteSoft,
-        ),
-        mini: true,
-      ),
+    return FloatingActionButton(
+      onPressed: widget.onPressedIconButtonSecondary,
+      tooltip: 'Receitas',
+      child: widget.iconButtonSecondary,
+      mini: true,
     );
   }
 
   Widget image() {
-    return new Container(
-      child: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Despesas',
-        mini: true,
-        child: Icon(
-          Icons.trending_down,
-          color: AppColors.whiteSoft,
-        ),
-      ),
+    return FloatingActionButton(
+      onPressed: widget.onPressedIconButtonPrimary,
+      tooltip: 'Despesas',
+      mini: true,
+      child: widget.iconButtonPrimary,
     );
   }
 
@@ -137,7 +139,9 @@ class _CustomFabState extends State<CustomFab>
   Widget toggle() {
     return FloatingActionButton(
       backgroundColor: _animateColor.value,
-      onPressed: animate,
+      onPressed: () {
+        animate();
+      },
       tooltip: 'Toggle',
       child: AnimatedIcon(
         icon: AnimatedIcons.menu_close,

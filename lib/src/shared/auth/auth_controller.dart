@@ -33,4 +33,17 @@ class AuthController {
       setUser(context, null);
     }
   }
+
+  Future<void> clearAllSavedPreferences(BuildContext context) async {
+    final instance = await SharedPreferences.getInstance();
+    await Future.delayed(Duration(seconds: 2));
+    instance.clear();
+  }
+
+  Future<void> clearUser(BuildContext context) async {
+    final instance = await SharedPreferences.getInstance();
+    await Future.delayed(Duration(seconds: 2));
+    instance.remove("user");
+    Navigator.pushReplacementNamed(context, "/login");
+  }
 }

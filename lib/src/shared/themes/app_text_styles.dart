@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
+  static final buttonPrimary = GoogleFonts.roboto(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.secondary,
+  );
+
+  static final buttonGray = GoogleFonts.roboto(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.grayMedium,
+  );
+
   static final titleSplash = GoogleFonts.offside(
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -39,10 +51,22 @@ class AppTextStyles {
     color: Colors.black,
   );
 
+  static final titlePagesBlack = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+
   static final subTitleBlack = GoogleFonts.roboto(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: Colors.black,
+  );
+
+  static final labelInputSecondary = GoogleFonts.roboto(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.secondary,
   );
 
   static final titleMovementWhite = GoogleFonts.roboto(

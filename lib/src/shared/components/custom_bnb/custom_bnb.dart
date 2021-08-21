@@ -43,12 +43,12 @@ class _CustomBnbState extends State<CustomBnb> {
             child: IconButton(
               onPressed: () {
                 setState(() {
-                  controller.setCurrentPage(BodyHomePages.Expanses);
+                  controller.setCurrentPage(BodyHomePages.Expenses);
                 });
               },
               icon: Icon(
                 Icons.trending_up,
-                color: controller.currentPage == BodyHomePages.Expanses
+                color: controller.currentPage == BodyHomePages.Expenses
                     ? AppColors.orangeMedium
                     : AppColors.whiteSoft,
               ),
@@ -74,15 +74,11 @@ class _CustomBnbState extends State<CustomBnb> {
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: IconButton(
               onPressed: () {
-                setState(() {
-                  controller.setCurrentPage(BodyHomePages.Settings);
-                });
+                Navigator.of(context).pushNamed('/settings');
               },
               icon: Icon(
                 Icons.settings,
-                color: controller.currentPage == BodyHomePages.Settings
-                    ? AppColors.orangeMedium
-                    : AppColors.whiteSoft,
+                color: AppColors.whiteSoft,
               ),
             ),
           ),

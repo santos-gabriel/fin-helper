@@ -31,7 +31,7 @@ class SocialLoginButton extends StatelessWidget {
                   ),
                   Container(
                     height: 56,
-                    width: 1,
+                    width: 0.5,
                     color: AppColors.graySoft,
                   ),
                 ],

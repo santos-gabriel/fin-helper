@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-enum BodyHomePages { Extract, Revenues, Expanses, Settings }
+enum BodyHomePages { Extract, Revenues, Expenses }
 
 class HomeController extends ChangeNotifier {
   var currentPage = BodyHomePages.Extract;

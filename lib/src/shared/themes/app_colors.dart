@@ -22,11 +22,27 @@ class AppColors {
   static final purpleSoft = Color(0xFFBB6BD9);
 
   static final revenue = Color(0xFFF59137);
-  static final expanse = Color(0xFF79CD7D);
+  static final expense = Color(0xFF79CD7D);
 
   static final primary = blueSoft;
   static final secondary = orangeDark;
   static final body = graySoft;
   static final delete = Color(0xFFE83F5B);
   static final background = Color(0xFFFFFFFF);
+
+  static final primarySwatchColor = MaterialColor(
+    0xFFF27405, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    const <int, Color>{
+      50: const Color(0xFFF27405), //10%
+      100: const Color(0xFFF27405), //20%
+      200: const Color(0xFFF27405), //30%
+      300: const Color(0xFFF27405), //40%
+      400: const Color(0xFFF27405), //50%
+      500: const Color(0xFFF27405), //60%
+      600: const Color(0xFFF27405), //70%
+      700: const Color(0xFFF27405), //80%
+      800: const Color(0xFFF27405), //90%
+      900: const Color(0xFFF27405), //100%
+    },
+  );
 }

@@ -3,14 +3,14 @@ import 'package:finhelper/src/shared/components/daily_movement/daily_movement.da
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class RevenuesPage extends StatefulWidget {
-  const RevenuesPage({Key? key}) : super(key: key);
+class ExpensesPage extends StatefulWidget {
+  const ExpensesPage({Key? key}) : super(key: key);
 
   @override
-  _RevenuesPageState createState() => _RevenuesPageState();
+  _ExpensesPageState createState() => _ExpensesPageState();
 }
 
-class _RevenuesPageState extends State<RevenuesPage> {
+class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,22 +30,6 @@ class _RevenuesPageState extends State<RevenuesPage> {
                 description: 'Descrição da receita',
                 type: 'Tipo de receita',
                 value: 'R\$ 75,00',
-              ),
-            ],
-          ),
-          DailyMovement(
-            title: '1 de Julho',
-            subTitle: 'Saldo do dia R\$ 50,00',
-            movements: [
-              CardMovement(
-                cardColors: AppColors.expense,
-                icon: Icon(
-                  Icons.trending_down,
-                  color: AppColors.whiteSoft,
-                ),
-                description: 'Descrição da despesa',
-                type: 'Tipo de despesa',
-                value: 'R\$ 50,00',
               ),
             ],
           ),
