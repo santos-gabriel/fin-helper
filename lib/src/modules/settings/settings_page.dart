@@ -1,5 +1,6 @@
 import 'package:finhelper/src/modules/settings/settings_controller.dart';
 import 'package:finhelper/src/shared/auth/auth_controller.dart';
+import 'package:finhelper/src/shared/database/DBProvider.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,17 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: Text(
                 'Sign out',
+                style: TextStyle(
+                  color: AppColors.whiteSoft,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await DBProvider.db.clearAll();
+              },
+              child: Text(
+                'Limpar Base - For Test',
                 style: TextStyle(
                   color: AppColors.whiteSoft,
                 ),
