@@ -1,8 +1,10 @@
+import 'package:finhelper/src/shared/database/DBProvider.dart';
 import 'package:finhelper/src/shared/models/revenue_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class AddRevenueController {
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RevenueModel model = RevenueModel();
 
   String? validateDescription(String? value) =>
@@ -17,17 +19,29 @@ class AddRevenueController {
   }
 
   Future<void> saveRevenue() async {
-    /*final instance = await SharedPreferences.getInstance();
-    final revenue = instance.getStringList("revenue") ?? <String>[];
-    revenue.add(model.toJson());
-    await instance.setStringList("revenue", revenue);*/
+    DBProvider.db.newRevenue(model);
     return;
   }
 
+  bool validate() {
+    bool descValidade = model.description?.isEmpty ?? true ? false : true;
+    bool typeValidade = model.type?.isEmpty ?? true ? false : true;
+    bool valueValidade = model.value == 0 ? false : true;
+    if (descValidade && typeValidade && valueValidade) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<void> cadastrarRevenue() async {
-    final form = formKey.currentState;
-    if (form!.validate()) {
+    model.date = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    if (validate()) {
       return await saveRevenue();
     }
+  }
+
+  Future<void> getById(int id) async {
+    return await DBProvider.db.getById(id);
   }
 }
