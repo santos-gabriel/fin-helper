@@ -37,6 +37,10 @@ dependencies:
   provider: ^5.0.0
   speed_dial_fab: ^2.1.1
   flutter_speed_dial: ^4.2.0
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
+  path_provider: ^2.0.2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
