@@ -1,24 +1,28 @@
 import 'dart:convert';
 
 class RevenueModel {
-  final String? description;
-  final String? type;
-  final double? value;
+  String? description;
+  String? type;
+  String? date;
+  double? value;
 
   RevenueModel({
     this.description,
     this.type,
+    this.date,
     this.value,
   });
 
   RevenueModel copyWith({
     String? description,
     String? type,
+    String? date,
     double? value,
   }) {
     return RevenueModel(
       description: description ?? this.description,
       type: type ?? this.type,
+      date: date ?? this.date,
       value: value ?? this.value,
     );
   }
@@ -27,15 +31,17 @@ class RevenueModel {
     return {
       'description': description,
       'type': type,
+      'date': date,
       'value': value,
     };
   }
 
   factory RevenueModel.fromMap(Map<String, dynamic> map) {
     return RevenueModel(
-      description: map['description'],
-      type: map['type'],
-      value: map['value'],
+      description: map['DESCRIPTION'],
+      type: map['TYPE'],
+      date: map['DATE'],
+      value: map['VALUE'],
     );
   }
 
@@ -46,7 +52,7 @@ class RevenueModel {
 
   @override
   String toString() {
-    return 'RevenueModel(description: $description, type: $type, value: $value)';
+    return 'RevenueModel(description: $description, type: $type, date: $date, value: $value)';
   }
 
   @override
@@ -56,11 +62,15 @@ class RevenueModel {
     return other is RevenueModel &&
         other.description == description &&
         other.type == type &&
+        other.date == date &&
         other.value == value;
   }
 
   @override
   int get hashCode {
-    return description.hashCode ^ type.hashCode ^ value.hashCode;
+    return description.hashCode ^
+        type.hashCode ^
+        date.hashCode ^
+        value.hashCode;
   }
 }

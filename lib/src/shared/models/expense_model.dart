@@ -1,28 +1,32 @@
 import 'dart:convert';
 
 class ExpenseModel {
-  final String? description;
-  final String? type;
-  final double? value;
-  final String? dueDate;
+  String? description;
+  String? type;
+  double? value;
+  String? date;
+  String? dueDate;
 
   ExpenseModel({
     this.description,
-    this.dueDate,
     this.type,
     this.value,
+    this.date,
+    this.dueDate,
   });
 
   ExpenseModel copyWith({
     String? description,
     String? type,
     double? value,
+    String? date,
     String? dueDate,
   }) {
     return ExpenseModel(
       description: description ?? this.description,
       type: type ?? this.type,
       value: value ?? this.value,
+      date: date ?? this.date,
       dueDate: dueDate ?? this.dueDate,
     );
   }
@@ -32,16 +36,18 @@ class ExpenseModel {
       'description': description,
       'type': type,
       'value': value,
+      'date': date,
       'dueDate': dueDate,
     };
   }
 
   factory ExpenseModel.fromMap(Map<String, dynamic> map) {
     return ExpenseModel(
-      description: map['description'],
-      type: map['type'],
-      value: map['value'],
-      dueDate: map['dueDate'],
+      description: map['DESCRIPTION'],
+      type: map['TYPE'],
+      value: map['VALUE'],
+      date: map['DATE'],
+      dueDate: map['DUEDATE'],
     );
   }
 
@@ -52,7 +58,7 @@ class ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(description: $description, type: $type, value: $value, dueDate: $dueDate)';
+    return 'ExpenseModel(description: $description, type: $type, value: $value, date: $date, dueDate: $dueDate)';
   }
 
   @override
@@ -63,6 +69,7 @@ class ExpenseModel {
         other.description == description &&
         other.type == type &&
         other.value == value &&
+        other.date == date &&
         other.dueDate == dueDate;
   }
 
@@ -71,6 +78,7 @@ class ExpenseModel {
     return description.hashCode ^
         type.hashCode ^
         value.hashCode ^
+        date.hashCode ^
         dueDate.hashCode;
   }
 }
