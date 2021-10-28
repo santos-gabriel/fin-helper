@@ -12,17 +12,19 @@ class AppColors {
   static final blueDark = Color(0xFF0583F2);
   static final blueMedium = Color(0xFF2D9CDB);
   static final blueSoft = Color(0xFF4682B4);
+  static final blueHardSoft = Color(0xFF4F90C6);
 
   static final orangeDark = Color(0xFFF27405);
   static final orangeMedium = Color(0xFFF59137);
   static final orangeSoft = Color(0xFFF2A764);
+  static final orangeHardSoft = Color(0xFFbd946f);
 
   static final purpleDark = Color(0xFF46027B);
   static final purpleMedium = Color(0xFF9B51E0);
   static final purpleSoft = Color(0xFFBB6BD9);
 
-  static final revenue = Color(0xFFF59137);
-  static final expense = Color(0xFF79CD7D);
+  static final revenue = Color(0xFF79CD7D);
+  static final expense = Color(0xFFF59137);
 
   static final primary = blueSoft;
   static final secondary = orangeDark;
