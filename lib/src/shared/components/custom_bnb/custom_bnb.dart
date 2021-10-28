@@ -25,6 +25,7 @@ class _CustomBnbState extends State<CustomBnb> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: IconButton(
+              tooltip: 'Extract',
               onPressed: () {
                 setState(() {
                   controller.setCurrentPage(BodyHomePages.Extract);
@@ -41,13 +42,14 @@ class _CustomBnbState extends State<CustomBnb> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: IconButton(
+              tooltip: 'Expenses',
               onPressed: () {
                 setState(() {
                   controller.setCurrentPage(BodyHomePages.Expenses);
                 });
               },
               icon: Icon(
-                Icons.trending_up,
+                Icons.trending_down,
                 color: controller.currentPage == BodyHomePages.Expenses
                     ? AppColors.orangeMedium
                     : AppColors.whiteSoft,
@@ -57,13 +59,14 @@ class _CustomBnbState extends State<CustomBnb> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: IconButton(
+              tooltip: 'Revenues',
               onPressed: () {
                 setState(() {
                   controller.setCurrentPage(BodyHomePages.Revenues);
                 });
               },
               icon: Icon(
-                Icons.trending_down,
+                Icons.trending_up,
                 color: controller.currentPage == BodyHomePages.Revenues
                     ? AppColors.orangeMedium
                     : AppColors.whiteSoft,
@@ -73,6 +76,7 @@ class _CustomBnbState extends State<CustomBnb> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: IconButton(
+              tooltip: 'Settings',
               onPressed: () {
                 Navigator.of(context).pushNamed('/settings');
               },
