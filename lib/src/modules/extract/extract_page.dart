@@ -22,7 +22,7 @@ class _ExtractPageState extends State<ExtractPage> {
             subTitle: 'Saldo do dia R\$ 50,00',
             movements: [
               CardMovement(
-                cardColors: AppColors.revenue,
+                cardColors: AppColors.expense,
                 icon: Icon(
                   Icons.trending_down,
                   color: AppColors.whiteSoft,
@@ -32,7 +32,7 @@ class _ExtractPageState extends State<ExtractPage> {
                 value: 'R\$ 25,00',
               ),
               CardMovement(
-                cardColors: AppColors.expense,
+                cardColors: AppColors.revenue,
                 icon: Icon(
                   Icons.trending_up,
                   color: AppColors.whiteSoft,
@@ -48,13 +48,13 @@ class _ExtractPageState extends State<ExtractPage> {
             subTitle: 'Saldo do dia R\$ 50,00',
             movements: [
               CardMovement(
-                cardColors: AppColors.expense,
+                cardColors: AppColors.revenue,
                 icon: Icon(
-                  Icons.trending_down,
+                  Icons.trending_up,
                   color: AppColors.whiteSoft,
                 ),
-                description: 'Descrição da despesa',
-                type: 'Tipo de despesa',
+                description: 'Descrição da receita',
+                type: 'Tipo de receita',
                 value: 'R\$ 50,00',
               ),
             ],
