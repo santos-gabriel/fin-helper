@@ -4,6 +4,7 @@ import 'package:finhelper/src/modules/revenues/revenues_page.dart';
 import 'package:finhelper/src/modules/settings/settings_controller.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:finhelper/src/modules/home/home_controller.dart';
@@ -25,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   SettingsController settingsController = SettingsController();
+  NumberFormat formater = NumberFormat("00.00");
 
   bool seeBalance = true;
   @override
@@ -119,15 +121,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     ),
                                   ),
                                 ),
-                                seeBalance
-                                    ? TextSpan(
-                                        text: "\nR\$ ${100.00} ",
-                                        style: AppTextStyles.subTitleWhiteSoft,
-                                      )
-                                    : TextSpan(
-                                        text: "\nR\$ ______ ",
-                                        style: AppTextStyles.subTitleWhiteSoft,
-                                      ),
+                                TextSpan(
+                                  text: "\nR\$ ",
+                                  style: AppTextStyles.subTitleWhiteSoft,
+                                  children: [
+                                    seeBalance
+                                        ? TextSpan(
+                                            text: "${formater.format(100.00)} ",
+                                            style:
+                                                AppTextStyles.subTitleWhiteSoft,
+                                          )
+                                        : TextSpan(
+                                            text: "            ",
+                                            style: TextStyle(
+                                              backgroundColor:
+                                                  AppColors.blueHardSoft,
+                                            ),
+                                          ),
+                                  ],
+                                ),
                               ],
                             )),
                           ),
