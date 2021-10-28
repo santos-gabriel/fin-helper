@@ -4,10 +4,12 @@ class CustomDropdownButton extends StatefulWidget {
   final List types;
   final bool isExpanded;
   final String? Function(String?)? validator;
+  final void Function(String?)? onChanged;
   const CustomDropdownButton({
     Key? key,
     required this.types,
     required this.isExpanded,
+    this.onChanged,
     this.validator,
   }) : super(key: key);
 
@@ -38,6 +40,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
     setState(() {
       _currentType = selectedType;
     });
+    widget.onChanged!(selectedType);
   }
 
   @override
