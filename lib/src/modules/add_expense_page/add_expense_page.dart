@@ -69,6 +69,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       types: ['Despesas fixas', 'Despesas não fixas'],
                       isExpanded: true,
                       validator: controller.validateType,
+                      onChanged: (value) {
+                        controller.onChange(type: value);
+                      },
                     ),
                   ),
                   Padding(
@@ -121,7 +124,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
           Navigator.pop(context);
         },
         secondaryLabel: "Confirmar",
-        secondaryOnPressed: () {
+        secondaryOnPressed: () async {
+          await controller.cadastrarExpense();
           Navigator.pop(context);
         },
         enableSecondaryColor: true,

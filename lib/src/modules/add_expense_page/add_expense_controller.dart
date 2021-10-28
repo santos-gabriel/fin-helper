@@ -1,5 +1,7 @@
+import 'package:finhelper/src/shared/database/DBProvider.dart';
 import 'package:finhelper/src/shared/models/expense_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class AddExpenseController {
   final formKey = GlobalKey<FormState>();
@@ -21,18 +23,32 @@ class AddExpenseController {
         description: description, type: type, value: value, dueDate: dueDate);
   }
 
-  Future<void> saveRevenue() async {
-    /*final instance = await SharedPreferences.getInstance();
-    final revenue = instance.getStringList("revenue") ?? <String>[];
-    revenue.add(model.toJson());
-    await instance.setStringList("revenue", revenue);*/
+  bool validate() {
+    bool descValidade = model.description?.isEmpty ?? true ? false : true;
+    bool dueDateValidade = model.dueDate?.isEmpty ?? true ? false : true;
+    bool typeValidade = model.type?.isEmpty ?? true ? false : true;
+    bool valueValidade = model.value == 0 ? false : true;
+    if (descValidade && typeValidade && valueValidade && dueDateValidade) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> saveExpense() async {
+    DBProvider.db.newExpense(model);
     return;
   }
 
-  Future<void> cadastrarRevenue() async {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      return await saveRevenue();
+  Future<void> cadastrarExpense() async {
+    model.date = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    if (validate()) {
+      return await saveExpense();
     }
+    return;
+    // final form = formKey.currentState;
+    // if (form!.validate()) {
+    //   return await saveExpense();
+    // }
   }
 }
