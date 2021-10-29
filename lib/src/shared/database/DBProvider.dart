@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:finhelper/src/shared/models/expense_model.dart';
+import 'package:finhelper/src/shared/models/movement_model.dart';
 import 'package:finhelper/src/shared/models/revenue_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -81,17 +82,35 @@ class DBProvider {
       res.forEach((element) {
         modelList.add(ExpenseModel.fromMap(element));
       });
-      print('***modelList.length: ${modelList.length}');
+      return modelList;
+    }
+    return modelList;
+  }
+
+  getAllMovement() async {
+    final db = await database;
+    final sql = 'SELECT E.ID, E.DESCRIPTION, E.TYPE, E.VALUE, E.DATE ' +
+        'FROM   EXPENSE E ' +
+        'UNION ALL ' +
+        'SELECT R.ID, R.DESCRIPTION, R.TYPE, R.VALUE, R.DATE ' +
+        'FROM   REVENUE R ';
+    var res = await db!.rawQuery(sql);
+    List<MovementModel> modelList = List.empty(growable: true);
+    if (res.isNotEmpty) {
+      res.forEach((element) {
+        modelList.add(MovementModel.fromMap(element));
+      });
       return modelList;
     }
     return modelList;
   }
 
   clearAll() async {
-    final db = await database;
+    //final db = await database;
     //getAllExpenses();
-    await db!.rawDelete('DELETE FROM REVENUE');
-    await db.rawDelete('DELETE FROM EXPENSE');
+    await getAllMovement();
+    // await db!.rawDelete('DELETE FROM REVENUE');
+    // await db.rawDelete('DELETE FROM EXPENSE');
     return;
   }
 }
