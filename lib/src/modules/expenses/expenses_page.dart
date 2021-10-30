@@ -1,3 +1,4 @@
+import 'package:animated_card/animated_card.dart';
 import 'package:finhelper/src/modules/expenses/expenses_controller.dart';
 import 'package:finhelper/src/shared/components/card_movement/card_movement.dart';
 import 'package:finhelper/src/shared/components/daily_movement/daily_movement.dart';
@@ -57,7 +58,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
         sum = sum + element.value!;
       });
       widgets.add(DailyMovement(
-        movements: widgetsChilds,
+        movements: List.from(widgetsChilds),
         title: '${DateUtil.getDay(key)} de ${DateUtil.getMonthExtensive(key)}',
         subTitle: 'Saldo do dia R\$ ${formater.format(sum)}',
       ));
@@ -76,7 +77,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
               vertical: 10,
               horizontal: 40,
             ),
-            child: ListView(children: widgets),
+            child: AnimatedCard(
+              child: ListView(children: widgets),
+            ),
           );
         } else {
           return Padding(
@@ -92,31 +95,4 @@ class _ExpensesPageState extends State<ExpensesPage> {
       },
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-  //     child: ListView(
-  //       children: [
-  //         DailyMovement(
-  //           title: '2 de Julho',
-  //           subTitle: 'Saldo do dia R\$ 50,00',
-  //           movements: [
-  //             CardMovement(
-  //               cardColors: AppColors.expense,
-  //               icon: Icon(
-  //                 Icons.trending_down,
-  //                 color: AppColors.whiteSoft,
-  //               ),
-  //               description: 'Descrição da despesa',
-  //               type: 'Tipo de despesa',
-  //               value: 'R\$ 75,00',
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

@@ -1,3 +1,4 @@
+import 'package:animated_card/animated_card.dart';
 import 'package:finhelper/src/modules/revenues/revenues_controller.dart';
 import 'package:finhelper/src/shared/components/card_movement/card_movement.dart';
 import 'package:finhelper/src/shared/components/daily_movement/daily_movement.dart';
@@ -60,7 +61,7 @@ class _RevenuesPageState extends State<RevenuesPage> {
       widgets.add(DailyMovement(
         title: '${DateUtil.getDay(key)} de ${DateUtil.getMonthExtensive(key)}',
         subTitle: 'Saldo do dia R\$ ${formater.format(sum)}',
-        movements: widgetsChilds,
+        movements: List.from(widgetsChilds),
       ));
     });
     return widgets;
@@ -74,7 +75,9 @@ class _RevenuesPageState extends State<RevenuesPage> {
         if (snapshot.hasData) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-            child: ListView(children: widgets),
+            child: AnimatedCard(
+              child: ListView(children: widgets),
+            ),
           );
         } else {
           return Padding(
