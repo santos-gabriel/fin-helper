@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:finhelper/src/shared/models/expense_model.dart';
@@ -105,10 +106,44 @@ class DBProvider {
     return modelList;
   }
 
+  getBalanceRevenues() async {
+    final db = await database;
+    final sql = "SELECT SUM(R.VALUE) AS BALANCE FROM REVENUE R";
+    var res = await db!.rawQuery(sql);
+    double result = 0;
+    if (res.isNotEmpty) {
+      res.forEach((element) {
+        result = double.parse(element['BALANCE'].toString());
+      });
+    }
+    return result;
+  }
+
+  getBalanceExpenses() async {
+    final db = await database;
+    final sql = "SELECT SUM(E.VALUE) AS BALANCE FROM EXPENSE E";
+    var res = await db!.rawQuery(sql);
+    double result = 0;
+    if (res.isNotEmpty) {
+      res.forEach((element) {
+        result = double.parse(element['BALANCE'].toString());
+      });
+    }
+    return result;
+  }
+
+  getBalance() async {
+    double resultExpenses = await getBalanceExpenses();
+    double resultRevenues = await getBalanceRevenues();
+    double result = resultRevenues - resultExpenses;
+
+    return result;
+  }
+
   clearAll() async {
     //final db = await database;
     //getAllExpenses();
-    await getAllMovement();
+    await getBalance();
     // await db!.rawDelete('DELETE FROM REVENUE');
     // await db.rawDelete('DELETE FROM EXPENSE');
     return;
