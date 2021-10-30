@@ -2,6 +2,7 @@ import 'package:finhelper/src/modules/expenses/expenses_page.dart';
 import 'package:finhelper/src/modules/extract/extract_page.dart';
 import 'package:finhelper/src/modules/revenues/revenues_page.dart';
 import 'package:finhelper/src/modules/settings/settings_controller.dart';
+import 'package:finhelper/src/shared/components/custom_app_bar/custom_app_bar.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   SettingsController settingsController = SettingsController();
   NumberFormat formater = NumberFormat("00.00");
 
-  bool seeBalance = true;
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<HomeController>();
@@ -36,137 +36,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(200),
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await Future.delayed(
-              Duration(seconds: 2),
-              () => {
-                setState(() {
-                  controller.setCurrentPage(BodyHomePages.Extract);
-                })
-              },
-            );
-          },
-          child: ListView(
-            children: [
-              Container(
-                height: 200,
-                color: AppColors.blueSoft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 5,
-                    right: 5,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text.rich(
-                              TextSpan(
-                                text: "Olá ${widget.user.name} \n",
-                                style: AppTextStyles.titleWhiteBold,
-                                children: [
-                                  TextSpan(
-                                    text: "Seja bem vindo",
-                                    style: AppTextStyles.subTitleWhiteSoft,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 48,
-                            width: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(5),
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                widget.user.photoURL!,
-                              )),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text.rich(TextSpan(
-                              text: "Saldo ",
-                              style: AppTextStyles.subTitleWhiteSoft,
-                              children: [
-                                WidgetSpan(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 2.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          seeBalance = !seeBalance;
-                                        });
-                                      },
-                                      child: seeBalance
-                                          ? Icon(
-                                              Icons.remove_red_eye,
-                                              color: AppColors.whiteSoft,
-                                            )
-                                          : Icon(
-                                              Icons.visibility_off,
-                                              color: AppColors.whiteSoft,
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "\nR\$ ",
-                                  style: AppTextStyles.subTitleWhiteSoft,
-                                  children: [
-                                    seeBalance
-                                        ? TextSpan(
-                                            text: "${formater.format(100.00)} ",
-                                            style:
-                                                AppTextStyles.subTitleWhiteSoft,
-                                          )
-                                        : TextSpan(
-                                            text: "            ",
-                                            style: TextStyle(
-                                              backgroundColor:
-                                                  AppColors.blueHardSoft,
-                                            ),
-                                          ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              child: Icon(
-                                settingsController.allowNotifications()
-                                    ? Icons.notifications
-                                    : Icons.notifications_off,
-                                color: AppColors.whiteSoft,
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  settingsController.setAllowNotifications(
-                                      !settingsController.allowNotifications());
-                                });
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+        child: CustomAppBar(
+          controller: controller,
+          formater: formater,
+          settingsController: settingsController,
+          user: widget.user,
         ),
       ),
       body: [
