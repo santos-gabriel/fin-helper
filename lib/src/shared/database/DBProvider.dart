@@ -108,7 +108,7 @@ class DBProvider {
 
   getBalanceRevenues() async {
     final db = await database;
-    final sql = "SELECT SUM(R.VALUE) AS BALANCE FROM REVENUE R";
+    final sql = "SELECT COALESCE(SUM(R.VALUE), 0) AS BALANCE FROM REVENUE R";
     var res = await db!.rawQuery(sql);
     double result = 0;
     if (res.isNotEmpty) {
@@ -121,7 +121,7 @@ class DBProvider {
 
   getBalanceExpenses() async {
     final db = await database;
-    final sql = "SELECT SUM(E.VALUE) AS BALANCE FROM EXPENSE E";
+    final sql = "SELECT COALESCE(SUM(E.VALUE), 0) AS BALANCE FROM EXPENSE E";
     var res = await db!.rawQuery(sql);
     double result = 0;
     if (res.isNotEmpty) {
@@ -141,7 +141,7 @@ class DBProvider {
   }
 
   clearAll() async {
-    //final db = await database;
+    // final db = await database;
     //getAllExpenses();
     await getBalance();
     // await db!.rawDelete('DELETE FROM REVENUE');
