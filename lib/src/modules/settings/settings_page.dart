@@ -103,17 +103,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await DBProvider.db.clearAll();
-              },
-              child: Text(
-                'Limpar Base - For Test',
-                style: TextStyle(
-                  color: AppColors.whiteSoft,
-                ),
-              ),
-            ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     await DBProvider.db.clearAll();
+            //   },
+            //   child: Text(
+            //     'Limpar Base - For Test',
+            //     style: TextStyle(
+            //       color: AppColors.whiteSoft,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
