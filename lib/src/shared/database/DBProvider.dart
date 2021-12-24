@@ -141,11 +141,37 @@ class DBProvider {
   }
 
   clearAll() async {
-    // final db = await database;
+    final db = await database;
     //getAllExpenses();
-    await getBalance();
-    // await db!.rawDelete('DELETE FROM REVENUE');
-    // await db.rawDelete('DELETE FROM EXPENSE');
+    // await getBalance();
+    await db!.rawDelete('DELETE FROM REVENUE');
+    await db.rawDelete('DELETE FROM EXPENSE');
+    return;
+  }
+
+  createAll() async {
+    final db = await database;
+    //getAllExpenses();
+    //await getBalance();
+    try {
+      await db!.execute("CREATE TABLE REVENUE ("
+          "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+          "DESCRIPTION TEXT,"
+          "TYPE TEXT,"
+          "VALUE REAL,"
+          "DATE TEXT"
+          ")");
+    } catch (e) {}
+    try {
+      await db!.execute("CREATE TABLE EXPENSE ("
+          "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+          "DESCRIPTION TEXT,"
+          "TYPE TEXT,"
+          "VALUE REAL,"
+          "DATE TEXT,"
+          "DUEDATE TEXT"
+          ")");
+    } catch (e) {}
     return;
   }
 }

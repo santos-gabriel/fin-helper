@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 class CustomInputText extends StatelessWidget {
   final String label;
+  final bool? isObscure;
+  final bool? isEnableSuggestions;
+  final bool? isEnableAutocorrect;
   final String? initialValue;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
@@ -9,6 +12,7 @@ class CustomInputText extends StatelessWidget {
   final TextStyle style;
   final TextStyle labelStyle;
   final TextInputType? keyboardType;
+  final Widget? sufixIconWidget;
 
   const CustomInputText({
     Key? key,
@@ -17,6 +21,10 @@ class CustomInputText extends StatelessWidget {
     this.validator,
     this.controller,
     this.keyboardType,
+    this.isObscure,
+    this.isEnableAutocorrect,
+    this.isEnableSuggestions,
+    this.sufixIconWidget,
     required this.onChanged,
     required this.style,
     required this.labelStyle,
@@ -28,6 +36,9 @@ class CustomInputText extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            obscureText: isObscure ?? false,
+            enableSuggestions: isEnableSuggestions ?? true,
+            autocorrect: isEnableAutocorrect ?? true,
             validator: validator,
             controller: controller,
             onChanged: onChanged,
@@ -38,6 +49,7 @@ class CustomInputText extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               labelText: label,
               labelStyle: labelStyle,
+              suffixIcon: sufixIconWidget,
             ),
           ),
         ],

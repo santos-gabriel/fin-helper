@@ -1,3 +1,4 @@
+import 'package:finhelper/src/shared/themes/app_images.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -96,9 +97,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
                             image: DecorationImage(
-                                image: NetworkImage(
-                              widget.user.photoURL!,
-                            )),
+                              image: widget.user.photoURL != null
+                                  ? NetworkImage(
+                                      widget.user.photoURL!,
+                                    )
+                                  : Image.asset(AppImages.logoFull).image,
+                            ),
                           ),
                         ),
                       ],
