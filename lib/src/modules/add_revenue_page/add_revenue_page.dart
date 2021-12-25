@@ -2,7 +2,6 @@ import 'package:finhelper/src/modules/add_revenue_page/add_revenue_controller.da
 import 'package:finhelper/src/shared/components/buttons_page_bottom/buttons_page_bottom.dart';
 import 'package:finhelper/src/shared/components/custom_dropdown_button/custom_dropdown_button.dart';
 import 'package:finhelper/src/shared/components/custom_input_text/custom_input_text.dart';
-import 'package:finhelper/src/shared/models/revenue_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';

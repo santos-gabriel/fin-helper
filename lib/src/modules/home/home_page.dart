@@ -3,7 +3,6 @@ import 'package:finhelper/src/modules/extract/extract_page.dart';
 import 'package:finhelper/src/modules/revenues/revenues_page.dart';
 import 'package:finhelper/src/modules/settings/settings_controller.dart';
 import 'package:finhelper/src/shared/components/custom_app_bar/custom_app_bar.dart';
-import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
