@@ -3,6 +3,8 @@ import 'package:finhelper/src/modules/add_revenue_page/add_revenue_page.dart';
 import 'package:finhelper/src/modules/home/home_controller.dart';
 import 'package:finhelper/src/modules/home/home_page.dart';
 import 'package:finhelper/src/modules/login/login_page.dart';
+import 'package:finhelper/src/modules/login_local_auth/login_local_auth_page.dart';
+import 'package:finhelper/src/modules/login_photo/login_photo_page.dart';
 import 'package:finhelper/src/modules/settings/settings_page.dart';
 import 'package:finhelper/src/modules/splash/splash_page.dart';
 import 'package:finhelper/src/shared/models/user_model.dart';
@@ -39,6 +41,12 @@ class AppWidget extends StatelessWidget {
           "/add-revenue": (context) => AddRevenuePage(),
           "/add-expense": (context) => AddExpensePage(),
           "/login": (context) => LoginPage(),
+          "/login-local-auth": (context) => LoginLocalAuthPage(
+                user: ModalRoute.of(context)!.settings.arguments as UserModel,
+              ),
+          "/login-photo": (context) => LoginPhotoPage(
+                user: ModalRoute.of(context)!.settings.arguments as UserModel,
+              ),
           "/home": (context) => HomePage(
                 user: ModalRoute.of(context)!.settings.arguments as UserModel,
               ),
