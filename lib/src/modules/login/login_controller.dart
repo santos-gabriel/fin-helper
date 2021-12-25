@@ -6,6 +6,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginController {
   final authController = AuthController();
 
+  String name = '';
+
+  void onChange({String? prName}) {
+    name = prName!;
+  }
+
+  String? validateName(String? value) =>
+      value?.isEmpty ?? true ? "Por favor, informe seu nome" : null;
+
   Future<void> localSignUp(
       BuildContext context, String name, String password) async {
     try {
@@ -18,17 +27,20 @@ class LoginController {
     }
   }
 
-  Future<void> localSignIn(
-      BuildContext context, String name, String password) async {
+  bool validate() {
+    bool bolName = name.isEmpty ? false : true;
+    if (bolName) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> localSignIn(BuildContext context) async {
     try {
-      await authController.currentUser(context);
-      if (authController.user != null) {
-        if ((authController.user.name == name) &&
-            (authController.user.password == password)) {
-          final user =
-              UserModel(name: name, photoURL: null, password: password);
-          authController.setUser(context, user);
-        }
+      if (validate()) {
+        final user = UserModel(name: name, photoURL: null, password: null);
+        authController.setUserPhoto(context, user);
       }
     } catch (error) {
       print(error);

@@ -1,8 +1,8 @@
 import 'package:finhelper/src/modules/login/login_controller.dart';
 import 'package:finhelper/src/shared/components/custom_input_text/custom_input_text.dart';
-import 'package:finhelper/src/shared/components/social_login/social_login_button.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_images.dart';
+import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,9 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isShowingPassword = false;
-  String login = '';
-  String password = '';
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
@@ -36,97 +33,67 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-              bottom: 100,
-              right: 20,
-              left: 20,
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: CustomInputText(
-                        label: 'Login',
-                        onChanged: (value) {
-                          setState(() {
-                            login = value;
-                          });
-                        },
-                        style: TextStyle(),
-                        labelStyle: TextStyle(),
-                      ),
+            top: 250,
+            left: 20,
+            right: 20,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                        text: 'Olá... \n',
+                        style: AppTextStyles.titlePagesBlack,
+                        children: [
+                          TextSpan(
+                            text: 'Precisamos de apenas algumas informações \n',
+                            style: AppTextStyles.buttonGray,
+                          ),
+                          TextSpan(
+                            text: 'Para começarmos, infome seu nome ',
+                            style: AppTextStyles.buttonGray,
+                          ),
+                        ]),
+                  ),
+                ]),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            left: 20,
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: CustomInputText(
+                      label: 'Informe seu nome',
+                      onChanged: (value) {
+                        controller.onChange(prName: value);
+                      },
+                      style: TextStyle(),
+                      labelStyle: TextStyle(),
+                      validator: controller.validateName,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: CustomInputText(
-                        label: 'Password',
-                        onChanged: (value) {
-                          setState(() {
-                            password = value;
-                          });
-                        },
-                        style: TextStyle(),
-                        labelStyle: TextStyle(),
-                        isObscure: isShowingPassword,
-                        isEnableAutocorrect: false,
-                        isEnableSuggestions: false,
-                        sufixIconWidget: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isShowingPassword = !isShowingPassword;
-                            });
-                          },
-                          child: Icon(
-                            isShowingPassword
-                                ? Icons.remove_red_eye
-                                : Icons.visibility_off,
-                          ),
-                        ),
-                      ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(10),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (login.isNotEmpty && password.isNotEmpty) {
-                              controller.localSignUp(context, login, password);
-                            }
-                          },
-                          child: Text(
-                            'Registre-se aqui',
-                            style: TextStyle(
-                              color: AppColors.graySoft,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(10),
-                          ),
-                          onPressed: () async {
-                            if (login.isNotEmpty && password.isNotEmpty) {
-                              controller.localSignIn(context, login, password);
-                            }
-                          },
-                          child: Icon(
-                            Icons.arrow_right_alt_sharp,
-                          ),
-                        ),
-                      ],
+                    onPressed: () async {
+                      controller.localSignIn(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_right_alt_sharp,
                     ),
-                  ],
-                ),
-              )
-              // child: SocialLoginButton(
-              //   onTap: () {
-              //     controller.googleSignIn(context);
-              //   },
-              // ),
+                  ),
+                ],
               ),
+            ),
+          ),
         ],
       ),
     );

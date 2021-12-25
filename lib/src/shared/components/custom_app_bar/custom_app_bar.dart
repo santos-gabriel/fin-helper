@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:finhelper/src/shared/themes/app_images.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:finhelper/src/modules/home/home_controller.dart';
 import 'package:finhelper/src/modules/settings/settings_controller.dart';
 import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CustomAppBar extends StatefulWidget {
   final HomeController controller;
@@ -28,6 +31,7 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   bool seeBalance = true;
   double balance = 0;
+  File? imageUsr;
 
   getBalance() async {
     double balanceAux = await widget.controller.getBalance();
@@ -36,11 +40,24 @@ class _CustomAppBarState extends State<CustomAppBar> {
     });
   }
 
+  getPhoto() async {
+    final Directory path = await getApplicationDocumentsDirectory();
+    final String pathStr = path.path;
+    File? fileAux = File('$pathStr/user.png');
+    if (!await fileAux.exists()) {
+      fileAux = null;
+    }
+    setState(() {
+      imageUsr = fileAux;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       getBalance();
+      getPhoto();
     });
   }
 
@@ -56,6 +73,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               setState(() {
                 widget.controller.setCurrentPage(BodyHomePages.Extract);
                 getBalance();
+                getPhoto();
               })
             },
           );
@@ -97,10 +115,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
                             image: DecorationImage(
-                              image: widget.user.photoURL != null
-                                  ? NetworkImage(
-                                      widget.user.photoURL!,
-                                    )
+                              image: imageUsr != null
+                                  ? Image.file(
+                                      imageUsr!,
+                                    ).image
                                   : Image.asset(AppImages.logoFull).image,
                             ),
                           ),
