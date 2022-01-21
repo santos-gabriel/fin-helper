@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:finhelper/src/shared/auth/auth_controller.dart';
+import 'package:finhelper/src/shared/database/DBProvider.dart';
 import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_images.dart';
@@ -34,15 +36,15 @@ class _LoginPhotoPageState extends State<LoginPhotoPage> {
     }
   }
 
-  savePhoto() async {
+  savePhoto(int idUser) async {
     final Directory path = await getApplicationDocumentsDirectory();
     final String pathStr = path.path;
-    final File fileDelete = File('$pathStr/user.png');
+    final File fileDelete = File('$pathStr/user_$idUser.png');
     try {
       if (await fileDelete.exists()) {
         await fileDelete.delete();
       }
-      await image!.saveTo('$pathStr/user.png');
+      await image!.saveTo('$pathStr/user_$idUser.png');
     } catch (e) {
       print(e);
     }
@@ -51,6 +53,7 @@ class _LoginPhotoPageState extends State<LoginPhotoPage> {
   @override
   Widget build(BuildContext context) {
     // final controller = LoginController();
+    final AuthController authController = AuthController();
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.whiteMedium,
@@ -165,9 +168,14 @@ class _LoginPhotoPageState extends State<LoginPhotoPage> {
                       padding: EdgeInsets.all(10),
                     ),
                     onPressed: () async {
-                      await savePhoto();
+                      await DBProvider.db.createAll();
+                      await DBProvider.db.clearAll();
+                      var idUser = await DBProvider.db.newUser(widget.user);
+                      UserModel newUser = widget.user.copyWith(id: idUser);
+                      await authController.saveUser(newUser);
+                      await savePhoto(idUser);
                       Navigator.pushReplacementNamed(context, "/home",
-                          arguments: widget.user);
+                          arguments: newUser);
                     },
                     child: Icon(
                       Icons.arrow_right_alt_sharp,
