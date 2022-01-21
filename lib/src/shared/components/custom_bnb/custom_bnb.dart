@@ -1,10 +1,15 @@
 import 'package:finhelper/src/modules/home/home_controller.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomBnb extends StatefulWidget {
-  const CustomBnb({Key? key}) : super(key: key);
+  final UserModel user;
+  const CustomBnb({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   _CustomBnbState createState() => _CustomBnbState();
