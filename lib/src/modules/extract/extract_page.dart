@@ -46,6 +46,10 @@ class _ExtractPageState extends State<ExtractPage> {
       widgetsChilds.clear();
       value.forEach((element) {
         widgetsChilds.add(CardMovement(
+          id: element.id!,
+          typeMovement: element.type!.toUpperCase().contains('DESPESA')
+              ? CardMovementTypeMovement.Expenses
+              : CardMovementTypeMovement.Revenues,
           cardColors: element.type!.toUpperCase().contains('DESPESA')
               ? AppColors.expense
               : AppColors.revenue,
