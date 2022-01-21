@@ -46,6 +46,8 @@ class _RevenuesPageState extends State<RevenuesPage> {
       widgetsChilds.clear();
       value.forEach((element) {
         widgetsChilds.add(CardMovement(
+          id: element.id!,
+          typeMovement: CardMovementTypeMovement.Revenues,
           cardColors: AppColors.revenue,
           icon: Icon(
             Icons.trending_up,
