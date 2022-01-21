@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           key: UniqueKey(),
         ),
       ][controller.currentPage.index],
-      bottomNavigationBar: CustomBnb(),
+      bottomNavigationBar: CustomBnb(user: widget.user),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: SpeedDial(
         backgroundColor: AppColors.secondary,
@@ -69,7 +69,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               backgroundColor: AppColors.secondary,
               foregroundColor: AppColors.whiteSoft,
               onTap: () {
-                Navigator.of(context).pushNamed('/add-expense');
+                Navigator.of(context)
+                    .pushNamed('/add-expense', arguments: widget.user);
               }),
           SpeedDialChild(
               child: Icon(Icons.trending_up),
@@ -77,7 +78,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               backgroundColor: AppColors.secondary,
               foregroundColor: AppColors.whiteSoft,
               onTap: () {
-                Navigator.of(context).pushNamed('/add-revenue');
+                Navigator.of(context)
+                    .pushNamed('/add-revenue', arguments: widget.user);
               }),
         ],
       ),
