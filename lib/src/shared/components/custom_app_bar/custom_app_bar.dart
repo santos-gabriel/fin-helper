@@ -43,7 +43,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   getPhoto() async {
     final Directory path = await getApplicationDocumentsDirectory();
     final String pathStr = path.path;
-    File? fileAux = File('$pathStr/user.png');
+    File? fileAux = File('$pathStr/user_${widget.user.id}.png');
     if (!await fileAux.exists()) {
       fileAux = null;
     }
@@ -52,12 +52,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
     });
   }
 
+  getSettings() async {
+    return await widget.settingsController.currentSettings();
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       getBalance();
       getPhoto();
+      getSettings();
     });
   }
 
@@ -183,23 +188,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             ),
                           ),
                         ),
-                        Container(
-                          child: GestureDetector(
-                            child: Icon(
-                              widget.settingsController.allowNotifications()
-                                  ? Icons.notifications
-                                  : Icons.notifications_off,
-                              color: AppColors.whiteSoft,
-                            ),
-                            onTap: () {
-                              setState(() {
-                                widget.settingsController.setAllowNotifications(
-                                    !widget.settingsController
-                                        .allowNotifications());
-                              });
-                            },
-                          ),
-                        )
+                        buildNothifications(),
                       ],
                     ),
                   ],
@@ -210,5 +199,32 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
       ),
     );
+  }
+
+  buildNothifications() {
+    return FutureBuilder(
+        future: getSettings(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              child: GestureDetector(
+                child: Icon(
+                  widget.settingsController.allowNotifications()
+                      ? Icons.notifications
+                      : Icons.notifications_off,
+                  color: AppColors.whiteSoft,
+                ),
+                onTap: () {
+                  setState(() {
+                    widget.settingsController.setAllowNotifications(
+                        !widget.settingsController.allowNotifications());
+                  });
+                },
+              ),
+            );
+          } else {
+            return Container();
+          }
+        });
   }
 }
