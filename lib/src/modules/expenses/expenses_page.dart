@@ -46,6 +46,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
       widgetsChilds.clear();
       value.forEach((element) {
         widgetsChilds.add(CardMovement(
+          id: element.id!,
+          typeMovement: CardMovementTypeMovement.Expenses,
           cardColors: AppColors.expense,
           icon: Icon(
             Icons.trending_down,
