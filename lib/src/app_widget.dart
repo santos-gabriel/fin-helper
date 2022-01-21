@@ -38,8 +38,12 @@ class AppWidget extends StatelessWidget {
         routes: {
           "/splash": (context) => SplashPage(),
           "/settings": (context) => SettingsPage(),
-          "/add-revenue": (context) => AddRevenuePage(),
-          "/add-expense": (context) => AddExpensePage(),
+          "/add-revenue": (context) => AddRevenuePage(
+                user: ModalRoute.of(context)!.settings.arguments as UserModel,
+              ),
+          "/add-expense": (context) => AddExpensePage(
+                user: ModalRoute.of(context)!.settings.arguments as UserModel,
+              ),
           "/login": (context) => LoginPage(),
           "/login-local-auth": (context) => LoginLocalAuthPage(
                 user: ModalRoute.of(context)!.settings.arguments as UserModel,
