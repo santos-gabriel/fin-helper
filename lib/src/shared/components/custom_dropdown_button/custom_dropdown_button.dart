@@ -47,7 +47,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
       isExpanded: widget.isExpanded,
-      value: _currentType,
+      value: _currentType != null ? _currentType : _dropDownMenuItems![0].value,
       items: _dropDownMenuItems,
       onChanged: (value) {
         changedDropDownItem(value.toString());
