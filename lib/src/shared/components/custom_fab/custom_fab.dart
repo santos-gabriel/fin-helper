@@ -34,9 +34,7 @@ class _CustomFabState extends State<CustomFab>
       vsync: this,
       duration: Duration(milliseconds: 500),
     )..addListener(() {
-        setState(() {
-          print("object");
-        });
+        setState(() {});
       });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
