@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:finhelper/src/shared/models/expense_model.dart';
 import 'package:finhelper/src/shared/models/movement_model.dart';
 import 'package:finhelper/src/shared/models/revenue_model.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,16 +25,14 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "application.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE REVENUE ("
-          "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-          "DESCRIPTION TEXT,"
-          "TYPE TEXT,"
-          "VALUE REAL,"
-          "DATE TEXT"
-          ")");
-    });
+    return await openDatabase(path,
+        version: 1, onOpen: (db) {}, onCreate: (Database db, int version) {});
+  }
+
+  newUser(UserModel userModel) async {
+    final db = await database;
+    var res = await db!.insert("USER", userModel.toMap());
+    return res;
   }
 
   newRevenue(RevenueModel revenueModel) async {
@@ -45,6 +44,18 @@ class DBProvider {
   newExpense(ExpenseModel expenseModel) async {
     final db = await database;
     var res = await db!.insert("EXPENSE", expenseModel.toMap());
+    return res;
+  }
+
+  deleteRevenueById(int id) async {
+    final db = await database;
+    var res = await db!.rawDelete('DELETE FROM REVENUE WHERE ID = ?', [id]);
+    return res;
+  }
+
+  deleteExpenseById(int id) async {
+    final db = await database;
+    var res = await db!.rawDelete('DELETE FROM EXPENSE WHERE ID = ?', [id]);
     return res;
   }
 
@@ -68,7 +79,6 @@ class DBProvider {
       res.forEach((element) {
         modelList.add(RevenueModel.fromMap(element));
       });
-      print(modelList.length);
       return modelList;
     }
     return modelList;
@@ -89,11 +99,12 @@ class DBProvider {
 
   getAllMovement() async {
     final db = await database;
-    final sql = 'SELECT E.ID, E.DESCRIPTION, E.TYPE, E.VALUE, E.DATE ' +
-        'FROM   EXPENSE E ' +
-        'UNION ALL ' +
-        'SELECT R.ID, R.DESCRIPTION, R.TYPE, R.VALUE, R.DATE ' +
-        'FROM   REVENUE R ';
+    final sql = 'SELECT E.ID, E.DESCRIPTION, E.TYPE, E.VALUE, E.DATE '
+        'FROM   EXPENSE E '
+        'UNION ALL '
+        'SELECT R.ID, R.DESCRIPTION, R.TYPE, R.VALUE, R.DATE '
+        'FROM   REVENUE R '
+        'ORDER BY DATE DESC';
     var res = await db!.rawQuery(sql);
     List<MovementModel> modelList = List.empty(growable: true);
     if (res.isNotEmpty) {
@@ -153,12 +164,21 @@ class DBProvider {
     //getAllExpenses();
     //await getBalance();
     try {
+      await db!.execute("CREATE TABLE USER("
+          "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+          "NAME TEXT,"
+          "PHOTOURL TEXT,"
+          "PASSWORD TEXT"
+          ");");
+    } catch (e) {}
+    try {
       await db!.execute("CREATE TABLE REVENUE ("
           "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
           "DESCRIPTION TEXT,"
           "TYPE TEXT,"
           "VALUE REAL,"
-          "DATE TEXT"
+          "DATE TEXT,"
+          "USER_ID INTEGER"
           ")");
     } catch (e) {}
     try {
@@ -168,7 +188,8 @@ class DBProvider {
           "TYPE TEXT,"
           "VALUE REAL,"
           "DATE TEXT,"
-          "DUEDATE TEXT"
+          "DUE_DATE TEXT,"
+          "USER_ID INTEGER"
           ")");
     } catch (e) {}
     return;
