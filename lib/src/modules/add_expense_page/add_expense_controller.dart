@@ -5,8 +5,16 @@ import 'package:intl/intl.dart';
 
 class AddExpenseController {
   final formKey = GlobalKey<FormState>();
-
   ExpenseModel model = ExpenseModel();
+  int userId;
+
+  AddExpenseController({required this.userId}) {
+    model = loadUserId();
+  }
+
+  loadUserId() {
+    return this.model = this.model.copyWith(userId: this.userId);
+  }
 
   String? validateDescription(String? value) =>
       value?.isEmpty ?? true ? "A descrição não pode ser vazia" : null;

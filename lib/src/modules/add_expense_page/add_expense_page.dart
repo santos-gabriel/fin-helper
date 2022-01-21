@@ -2,20 +2,26 @@ import 'package:finhelper/src/modules/add_expense_page/add_expense_controller.da
 import 'package:finhelper/src/shared/components/buttons_page_bottom/buttons_page_bottom.dart';
 import 'package:finhelper/src/shared/components/custom_dropdown_button/custom_dropdown_button.dart';
 import 'package:finhelper/src/shared/components/custom_input_text/custom_input_text.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class AddExpensePage extends StatefulWidget {
-  const AddExpensePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const AddExpensePage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   _AddExpensePageState createState() => _AddExpensePageState();
 }
 
 class _AddExpensePageState extends State<AddExpensePage> {
-  AddExpenseController controller = AddExpenseController();
+  AddExpenseController? controller;
+  final listTypes = ['Despesas fixas', 'Despesas não fixas'];
 
   final moneyInputTextController = MoneyMaskedTextController(
     leftSymbol: "R\$",
@@ -24,8 +30,13 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
   final dueDateInputTextController = MaskedTextController(mask: "00/00/0000");
 
+  loadController() {
+    controller = AddExpenseController(userId: widget.user.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadController();
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -57,20 +68,20 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       label: 'Descrição',
                       labelStyle: AppTextStyles.labelInputSecondary,
                       style: AppTextStyles.subTitleBlack,
-                      validator: controller.validateDescription,
+                      validator: controller!.validateDescription,
                       onChanged: (value) {
-                        controller.onChange(description: value);
+                        controller!.onChange(description: value);
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: CustomDropdownButton(
-                      types: ['Despesas fixas', 'Despesas não fixas'],
+                      types: listTypes,
                       isExpanded: true,
-                      validator: controller.validateType,
+                      validator: controller!.validateType,
                       onChanged: (value) {
-                        controller.onChange(type: value);
+                        controller!.onChange(type: value);
                       },
                     ),
                   ),
@@ -87,9 +98,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             style: AppTextStyles.subTitleBlack,
                             controller: dueDateInputTextController,
                             keyboardType: TextInputType.datetime,
-                            validator: controller.validateDueDate,
+                            validator: controller!.validateDueDate,
                             onChanged: (value) {
-                              controller.onChange(dueDate: value);
+                              controller!.onChange(dueDate: value);
                             },
                           ),
                         ),
@@ -102,10 +113,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             controller: moneyInputTextController,
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
-                              controller.onChange(
+                              controller!.onChange(
                                   value: moneyInputTextController.numberValue);
                             },
-                            validator: (_) => controller.validateValor(
+                            validator: (_) => controller!.validateValor(
                                 moneyInputTextController.numberValue),
                           ),
                         )
@@ -125,7 +136,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
         },
         secondaryLabel: "Confirmar",
         secondaryOnPressed: () async {
-          await controller.cadastrarExpense();
+          if (controller!.model.type == null) {
+            controller!.onChange(type: listTypes[0]);
+          }
+          await controller!.cadastrarExpense();
           Navigator.pop(context);
         },
         enableSecondaryColor: true,
