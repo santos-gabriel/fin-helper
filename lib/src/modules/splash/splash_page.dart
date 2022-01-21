@@ -4,13 +4,19 @@ import 'package:finhelper/src/shared/themes/app_images.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  final authController = AuthController();
+
+  @override
   Widget build(BuildContext context) {
-    final authController = AuthController();
-    authController.currentUser(context);
+    authController.currentUser(context, verifySettings: true);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(
