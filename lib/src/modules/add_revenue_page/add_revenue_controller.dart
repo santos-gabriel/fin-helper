@@ -4,8 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class AddRevenueController {
+  int userId;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RevenueModel model = RevenueModel();
+
+  AddRevenueController({required this.userId}) {
+    model = loadUserId();
+  }
+
+  loadUserId() {
+    return this.model = this.model.copyWith(userId: this.userId);
+  }
 
   String? validateDescription(String? value) =>
       value?.isEmpty ?? true ? "A descrição não pode ser vazia" : null;

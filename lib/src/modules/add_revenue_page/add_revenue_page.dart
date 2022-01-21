@@ -2,25 +2,36 @@ import 'package:finhelper/src/modules/add_revenue_page/add_revenue_controller.da
 import 'package:finhelper/src/shared/components/buttons_page_bottom/buttons_page_bottom.dart';
 import 'package:finhelper/src/shared/components/custom_dropdown_button/custom_dropdown_button.dart';
 import 'package:finhelper/src/shared/components/custom_input_text/custom_input_text.dart';
+import 'package:finhelper/src/shared/models/user_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class AddRevenuePage extends StatefulWidget {
-  const AddRevenuePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const AddRevenuePage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   AaddRevenuePageState createState() => AaddRevenuePageState();
 }
 
 class AaddRevenuePageState extends State<AddRevenuePage> {
-  AddRevenueController controller = AddRevenueController();
+  AddRevenueController? controller;
+  final listTypes = ['Receitas fixas', 'Receitas não fixas'];
   final moneyInputTextController =
       MoneyMaskedTextController(leftSymbol: "R\$", decimalSeparator: ",");
 
+  loadController() {
+    controller = AddRevenueController(userId: widget.user.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadController();
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -52,20 +63,20 @@ class AaddRevenuePageState extends State<AddRevenuePage> {
                       label: 'Descrição',
                       labelStyle: AppTextStyles.labelInputSecondary,
                       style: AppTextStyles.subTitleBlack,
-                      validator: controller.validateDescription,
+                      validator: controller!.validateDescription,
                       onChanged: (value) {
-                        controller.onChange(description: value);
+                        controller!.onChange(description: value);
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: CustomDropdownButton(
-                      types: ['Receitas fixas', 'Receitas não fixas'],
+                      types: listTypes,
                       isExpanded: true,
-                      validator: controller.validateType,
+                      validator: controller!.validateType,
                       onChanged: (value) {
-                        controller.onChange(type: value);
+                        controller!.onChange(type: value);
                       },
                     ),
                   ),
@@ -80,10 +91,10 @@ class AaddRevenuePageState extends State<AddRevenuePage> {
                         controller: moneyInputTextController,
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          controller.onChange(
+                          controller!.onChange(
                               value: moneyInputTextController.numberValue);
                         },
-                        validator: (_) => controller.validateValor(
+                        validator: (_) => controller!.validateValor(
                             moneyInputTextController.numberValue),
                       ),
                     ),
@@ -102,7 +113,10 @@ class AaddRevenuePageState extends State<AddRevenuePage> {
         },
         secondaryLabel: "Confirmar",
         secondaryOnPressed: () async {
-          await controller.cadastrarRevenue();
+          if (controller!.model.type == null) {
+            controller!.onChange(type: listTypes[0]);
+          }
+          await controller!.cadastrarRevenue();
           Navigator.pop(context);
         },
         enableSecondaryColor: true,
