@@ -114,14 +114,14 @@ class _LoginLocalAuthPageState extends State<LoginLocalAuthPage> {
           Padding(
             padding: const EdgeInsets.only(top: 40),
             child: Container(
-              height: 250,
-              width: 250,
+              height: 300,
+              width: 300,
               child: Image.asset(AppImages.logoFull),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              bottom: 20,
+              bottom: 50,
               left: 50,
               right: 50,
             ),

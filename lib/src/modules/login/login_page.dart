@@ -22,50 +22,56 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: AppColors.whiteMedium,
       body: Stack(
         children: [
-          Positioned(
-            top: 50,
-            left: 20,
-            right: 20,
-            child: Container(
-              height: 150,
-              width: 150,
-              child: Image.asset(AppImages.logoFull),
-            ),
-          ),
-          Positioned(
-            top: 250,
-            left: 20,
-            right: 20,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                        text: 'Olá... \n',
-                        style: AppTextStyles.titlePagesBlack,
-                        children: [
-                          TextSpan(
-                            text: 'Precisamos de apenas algumas informações \n',
-                            style: AppTextStyles.buttonGray,
-                          ),
-                          TextSpan(
-                            text: 'Para começarmos, infome seu nome ',
-                            style: AppTextStyles.buttonGray,
-                          ),
-                        ]),
-                  ),
-                ]),
-          ),
+          // Positioned(
+          //   top: 50,
+          //   left: 20,
+          //   right: 20,
+          //   child:
+          // ),
+          // Positioned(
+          //   top: 250,
+          //   left: 20,
+          //   right: 20,
+          //   child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+
+          //       ]),
+          // ),
           Positioned(
             bottom: 20,
             right: 20,
             left: 20,
             child: Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Container(
+                    height: 200,
+                    width: 200,
+                    child: Image.asset(AppImages.logoFull),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: Text.rich(
+                      TextSpan(
+                          text: 'Olá... \n',
+                          style: AppTextStyles.titlePagesBlack,
+                          children: [
+                            TextSpan(
+                              text:
+                                  'Precisamos de apenas algumas informações \n',
+                              style: AppTextStyles.buttonGray,
+                            ),
+                            TextSpan(
+                              text: 'Para começarmos, infome seu nome. ',
+                              style: AppTextStyles.buttonGray,
+                            ),
+                          ]),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 50),
                     child: CustomInputText(
@@ -78,17 +84,22 @@ class _LoginPageState extends State<LoginPage> {
                       validator: controller.validateName,
                     ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(10),
-                    ),
-                    onPressed: () async {
-                      controller.localSignIn(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_right_alt_sharp,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(10),
+                        ),
+                        onPressed: () async {
+                          controller.localSignIn(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_right_alt_sharp,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

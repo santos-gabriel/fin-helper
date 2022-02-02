@@ -55,133 +55,139 @@ class _LoginPhotoPageState extends State<LoginPhotoPage> {
     // final controller = LoginController();
     final AuthController authController = AuthController();
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.whiteMedium,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  height: 150,
-                  width: 150,
+          Container(
+            height: ((MediaQuery.of(context).size.height * 70) / 100),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 200,
+                  width: 200,
                   child: Image.asset(AppImages.logoFull),
                 ),
-              ),
-              Container(
-                child: Text.rich(
-                  TextSpan(
-                      text: 'Estamos quase lá... \n',
-                      style: AppTextStyles.titlePagesBlack,
-                      children: [
-                        TextSpan(
-                          text: 'Adicione uma foto sua \n',
-                          style: AppTextStyles.buttonGray,
-                        ),
-                        TextSpan(
-                          text: 'Caso não queira, apenas siga em frente ',
-                          style: AppTextStyles.buttonGray,
-                        ),
-                      ]),
+                Container(
+                  child: Text.rich(
+                    TextSpan(
+                        text: 'Estamos quase lá... \n',
+                        style: AppTextStyles.titlePagesBlack,
+                        children: [
+                          TextSpan(
+                            text: 'Adicione uma foto sua \n',
+                            style: AppTextStyles.buttonGray,
+                          ),
+                          TextSpan(
+                            text: 'Caso não queira, apenas siga em frente ',
+                            style: AppTextStyles.buttonGray,
+                          ),
+                        ]),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            height: 48,
-            width: 48,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(5),
-              image: DecorationImage(
-                  image: image != null
-                      ? Image.file(File(image!.path)).image
-                      : Image.asset(AppImages.logoFull).image),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: 20,
-              left: 20,
-              right: 20,
-            ),
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
+                if (image != null)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 50),
-                    child: InkWell(
-                      onTap: () async {
-                        getPhotoFromGallery();
-                      },
-                      child: Container(
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color: AppColors.whiteSoft,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.fromBorderSide(
-                              BorderSide(color: AppColors.graySoft)),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.photo),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Container(
-                                    height: 56,
-                                    width: 0.5,
-                                    color: AppColors.graySoft,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Adicione uma foto para seu perfil",
-                                    style: AppTextStyles.titleGraySoftRegular,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Container(
+                      height: 68,
+                      width: 68,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                            image: Image.file(File(image!.path)).image),
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(10),
+              ],
+            ),
+          ),
+          Container(
+            height: ((MediaQuery.of(context).size.height * 30) / 100),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 20,
+                left: 20,
+                right: 20,
+              ),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 50),
+                      child: InkWell(
+                        onTap: () async {
+                          getPhotoFromGallery();
+                        },
+                        child: Container(
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteSoft,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.fromBorderSide(
+                                BorderSide(color: AppColors.graySoft)),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.photo),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    Container(
+                                      height: 56,
+                                      width: 0.5,
+                                      color: AppColors.graySoft,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Adicione uma foto para seu perfil",
+                                      style: AppTextStyles.titleGraySoftRegular,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    onPressed: () async {
-                      await DBProvider.db.createAll();
-                      await DBProvider.db.clearAll();
-                      var idUser = await DBProvider.db.newUser(widget.user);
-                      UserModel newUser = widget.user.copyWith(id: idUser);
-                      await authController.saveUser(newUser);
-                      await savePhoto(idUser);
-                      Navigator.pushReplacementNamed(context, "/home",
-                          arguments: newUser);
-                    },
-                    child: Icon(
-                      Icons.arrow_right_alt_sharp,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(10),
+                      ),
+                      onPressed: () async {
+                        await DBProvider.db.createAll();
+                        await DBProvider.db.clearAll();
+                        var idUser = await DBProvider.db.newUser(widget.user);
+                        UserModel newUser = widget.user.copyWith(id: idUser);
+                        await authController.saveUser(newUser);
+                        await savePhoto(idUser);
+                        Navigator.pushReplacementNamed(context, "/home",
+                            arguments: newUser);
+                      },
+                      child: Icon(
+                        Icons.arrow_right_alt_sharp,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
