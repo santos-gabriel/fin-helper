@@ -2,6 +2,7 @@ import 'package:animated_card/animated_card.dart';
 import 'package:finhelper/src/modules/extract/extract_controller.dart';
 import 'package:finhelper/src/shared/components/card_movement/card_movement.dart';
 import 'package:finhelper/src/shared/components/daily_movement/daily_movement.dart';
+import 'package:finhelper/src/shared/components/empty_balance/empty_balance.dart';
 import 'package:finhelper/src/shared/models/movement_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/utils/date-util.dart';
@@ -79,7 +80,7 @@ class _ExtractPageState extends State<ExtractPage> {
     return FutureBuilder(
       future: getFields(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if ((snapshot.hasData) && (widgets.length > 0)) {
           return Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -96,7 +97,7 @@ class _ExtractPageState extends State<ExtractPage> {
               horizontal: 40,
             ),
             child: ListView(
-              children: [],
+              children: [EmptyBalance()],
             ),
           );
         }

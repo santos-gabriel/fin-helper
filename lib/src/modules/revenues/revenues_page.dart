@@ -2,6 +2,7 @@ import 'package:animated_card/animated_card.dart';
 import 'package:finhelper/src/modules/revenues/revenues_controller.dart';
 import 'package:finhelper/src/shared/components/card_movement/card_movement.dart';
 import 'package:finhelper/src/shared/components/daily_movement/daily_movement.dart';
+import 'package:finhelper/src/shared/components/empty_balance/empty_balance.dart';
 import 'package:finhelper/src/shared/models/revenue_model.dart';
 import 'package:finhelper/src/shared/themes/app_colors.dart';
 import 'package:finhelper/src/shared/utils/date-util.dart';
@@ -74,7 +75,7 @@ class _RevenuesPageState extends State<RevenuesPage> {
     return FutureBuilder(
       future: getFields(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if ((snapshot.hasData) && (widgets.length > 0)) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
             child: AnimatedCard(
@@ -84,7 +85,7 @@ class _RevenuesPageState extends State<RevenuesPage> {
         } else {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-            child: ListView(children: []),
+            child: ListView(children: [EmptyBalance()]),
           );
         }
       },
