@@ -53,6 +53,7 @@ flutter_icons:
   image_path: "assets/images/logomini.png"
   android: true
   ios: true
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
