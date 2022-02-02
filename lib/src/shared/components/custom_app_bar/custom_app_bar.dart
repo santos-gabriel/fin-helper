@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:finhelper/src/shared/themes/app_images.dart';
 import 'package:finhelper/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +28,7 @@ class CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  List<Widget> widgets = List.empty(growable: true);
   bool seeBalance = true;
   double balance = 0;
   File? imageUsr;
@@ -85,120 +85,137 @@ class _CustomAppBarState extends State<CustomAppBar> {
         },
         child: ListView(
           children: [
-            Container(
-              height: 200,
-              color: AppColors.blueSoft,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  right: 5,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Olá ${widget.user.name} \n",
-                              style: AppTextStyles.titleWhiteBold,
-                              children: [
-                                TextSpan(
-                                  text: "Seja bem vindo",
-                                  style: AppTextStyles.subTitleWhiteSoft,
-                                ),
-                              ],
-                            ),
-                          ),
+            FutureBuilder(
+                future: dataCustomAppBar(),
+                builder: (context, snaphot) {
+                  if (snaphot.hasData) {
+                    return Container(
+                      height: 200,
+                      color: AppColors.blueSoft,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          right: 5,
                         ),
-                        Container(
-                          height: 48,
-                          width: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: imageUsr != null
-                                  ? Image.file(
-                                      imageUsr!,
-                                    ).image
-                                  : Image.asset(AppImages.logoFull).image,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Saldo ",
-                              style: AppTextStyles.subTitleWhiteSoft,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                WidgetSpan(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 2.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          seeBalance = !seeBalance;
-                                          if (seeBalance) {
-                                            widget.controller.getBalance();
-                                          }
-                                        });
-                                      },
-                                      child: seeBalance
-                                          ? Icon(
-                                              Icons.remove_red_eye,
-                                              color: AppColors.whiteSoft,
-                                            )
-                                          : Icon(
-                                              Icons.visibility_off,
-                                              color: AppColors.whiteSoft,
-                                            ),
+                                Container(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      text: "Olá, ${widget.user.name} \n",
+                                      style: AppTextStyles.titleWhiteBold,
+                                      children: [
+                                        TextSpan(
+                                          text: "Seja bem vindo",
+                                          style:
+                                              AppTextStyles.subTitleWhiteSoft,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                                TextSpan(
-                                  text: "\nR\$ ",
-                                  style: AppTextStyles.subTitleWhiteSoft,
-                                  children: [
-                                    seeBalance
-                                        ? TextSpan(
-                                            text:
-                                                "${widget.formater.format(balance)} ",
-                                            style:
-                                                AppTextStyles.subTitleWhiteSoft,
-                                          )
-                                        : TextSpan(
-                                            text: "            ",
-                                            style: TextStyle(
-                                              backgroundColor:
-                                                  AppColors.blueHardSoft,
-                                            ),
-                                          ),
-                                  ],
-                                ),
+                                if (imageUsr != null)
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                        image: Image.file(imageUsr!).image,
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
-                          ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      text: "Saldo ",
+                                      style: AppTextStyles.subTitleWhiteSoft,
+                                      children: [
+                                        WidgetSpan(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 2.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  seeBalance = !seeBalance;
+                                                  if (seeBalance) {
+                                                    widget.controller
+                                                        .getBalance();
+                                                  }
+                                                });
+                                              },
+                                              child: seeBalance
+                                                  ? Icon(
+                                                      Icons.remove_red_eye,
+                                                      color:
+                                                          AppColors.whiteSoft,
+                                                    )
+                                                  : Icon(
+                                                      Icons.visibility_off,
+                                                      color:
+                                                          AppColors.whiteSoft,
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: "\nR\$ ",
+                                          style:
+                                              AppTextStyles.subTitleWhiteSoft,
+                                          children: [
+                                            seeBalance
+                                                ? TextSpan(
+                                                    text:
+                                                        "${widget.formater.format(balance)} ",
+                                                    style: AppTextStyles
+                                                        .subTitleWhiteSoft,
+                                                  )
+                                                : TextSpan(
+                                                    text: "            ",
+                                                    style: TextStyle(
+                                                      backgroundColor: AppColors
+                                                          .blueHardSoft,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                buildNothifications(),
+                              ],
+                            ),
+                          ],
                         ),
-                        buildNothifications(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
           ],
         ),
       ),
     );
+  }
+
+  dataCustomAppBar() async {
+    await getBalance();
+    await getPhoto();
+    await getSettings();
+    return 1;
   }
 
   buildNothifications() {
