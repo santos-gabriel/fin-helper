@@ -21,6 +21,12 @@ class AppTextStyles {
     color: AppColors.grayDark,
   );
 
+  static final titleEmptyBalance = GoogleFonts.roboto(
+    fontSize: 22,
+    fontWeight: FontWeight.w400,
+    color: AppColors.graySoft,
+  );
+
   static final textSplash = GoogleFonts.offside(
     fontSize: 13,
     fontWeight: FontWeight.w400,
