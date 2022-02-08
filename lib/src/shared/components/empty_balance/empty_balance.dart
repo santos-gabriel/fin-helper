@@ -17,7 +17,7 @@ class EmptyBalance extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2),
             child: Text(
-              'Nada por aqui',
+              'Nada por aqui...',
               style: AppTextStyles.titleEmptyBalance,
             ),
           ),
