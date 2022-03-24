@@ -63,7 +63,7 @@ class _RevenuesPageState extends State<RevenuesPage> {
 
       widgets.add(DailyMovement(
         title: '${DateUtil.getDay(key)} de ${DateUtil.getMonthExtensive(key)}',
-        subTitle: 'Saldo do dia R\$ ${formater.format(sum)}',
+        subTitle: 'Total receitas do dia R\$ ${formater.format(sum)}',
         movements: List.from(widgetsChilds),
       ));
     });
@@ -85,7 +85,11 @@ class _RevenuesPageState extends State<RevenuesPage> {
         } else {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-            child: ListView(children: [EmptyBalance()]),
+            child: ListView(children: [
+              EmptyBalance(
+                secondsDelayed: 1,
+              )
+            ]),
           );
         }
       },
