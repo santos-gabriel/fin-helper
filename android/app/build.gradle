@@ -47,7 +47,7 @@ android {
         // versionCode flutterVersionCode.toInteger()
         versionCode 1
         // versionName flutterVersionName
-        versionName 'Version 1.0.0'
+        versionName 'Version 1.0.3'
     }
 
    signingConfigs {
