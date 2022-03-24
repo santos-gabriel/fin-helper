@@ -138,7 +138,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                                 Container(
                                   child: Text.rich(
                                     TextSpan(
-                                      text: "Saldo ",
+                                      text: "Saldo Geral",
                                       style: AppTextStyles.subTitleWhiteSoft,
                                       children: [
                                         WidgetSpan(
