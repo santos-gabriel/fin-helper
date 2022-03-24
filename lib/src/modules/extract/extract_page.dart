@@ -64,7 +64,9 @@ class _ExtractPageState extends State<ExtractPage> {
           type: element.type!,
           value: 'R\$ ${formater.format(element.value)}',
         ));
-        sum = sum + element.value!;
+        sum = element.type!.toUpperCase().contains('DESPESA')
+            ? sum - element.value!
+            : sum + element.value!;
       });
       widgets.add(DailyMovement(
         movements: List.from(widgetsChilds),
@@ -97,7 +99,11 @@ class _ExtractPageState extends State<ExtractPage> {
               horizontal: 40,
             ),
             child: ListView(
-              children: [EmptyBalance()],
+              children: [
+                EmptyBalance(
+                  secondsDelayed: 1,
+                )
+              ],
             ),
           );
         }
