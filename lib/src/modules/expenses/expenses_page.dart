@@ -63,7 +63,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
       widgets.add(DailyMovement(
         movements: List.from(widgetsChilds),
         title: '${DateUtil.getDay(key)} de ${DateUtil.getMonthExtensive(key)}',
-        subTitle: 'Saldo do dia R\$ ${formater.format(sum)}',
+        subTitle: 'Total despesas do dia R\$ ${formater.format(sum)}',
       ));
     });
     return widgets;
@@ -91,7 +91,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
               horizontal: 40,
             ),
             child: ListView(
-              children: [EmptyBalance()],
+              children: [
+                EmptyBalance(
+                  secondsDelayed: 1,
+                )
+              ],
             ),
           );
         }
